@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/create.css' %}" />
+        <title>Create group</title>
+    </head>
+    <body>
+        <form action="/home/create_group/" method="post">
+            {% csrf_token %}
+            <label for="group_name">Enter group name:</label>
+            <input type="text" name="group_name" id="group_name" />
+            <label for="group_code">Enter group code:</label>
+            <input type="text" name="group_code" id="group_code" />
+            <input type="submit" value="Create new group" />
+        </form>
+    </body>
+</html>

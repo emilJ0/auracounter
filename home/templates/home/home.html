@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Aura Counter</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <p>Willkommen, {{ user.username }}!</p>
+        {% if group_name != "Platzhalter" %}
+        <p>Group: {{group_name}}</p>
+        <form action="/home/manage_aura/" method="post">
+            {% csrf_token %}
+            <label for="dynamic_choice">Choose:</label>
+            <select name="choice" id="choice">
+                {% for choice in choices %}
+                <option value="{{ choice }}">{{ choice }}</option>
+                {% endfor %}
+            </select>
+            <label for="amount">Amount:</label>
+            <input name="amount" id="amount" type="number" />
+            <input type="submit" value="Enter" />
+        </form>
+        {% for user in group_users %}
+        <p>user: {{user.0}}</p>
+        <p>aura: {{user.1}}</p>
+        {% endfor %}
+        <form action="leave_group/" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Leave Group" />
+        </form>
+        {% else %}
+        <a href="/home/start_create_group/">Create Group</a>
+        <br />
+        <a href="/home/start_join_group/">Join Group</a>
+        {% endif %}
+        <form action="/user_auth/logout_user/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="logout" id="logout" />
+            <input type="submit" value="Logout" />
+        </form>
+        {% else %}
+        <p>Du bist nicht eingeloggt.</p>
+        {% endif %}
+    </body>
+</html>

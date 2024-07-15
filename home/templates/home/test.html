@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Aura Counter</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <div class="container">
+            <div class="header">
+                <p>Willkommen, {{ user.username }}!</p>
+                <span class="settings">&#9881;</span>
+            </div>
+            {% if group_name != "Platzhalter" %}
+            <p class="group">Gruppe: {{group_name}}</p>
+            <div class="table-container">
+                <div class="table">
+                    {% for user in group_users %}
+                    <p>{{user.0}}: {{user.1}}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-container">
+                    <form action="/home/manage_aura/" method="post">
+                        {% csrf_token %}
+                        <label for="dynamic_choice">Choose:</label>
+                        <select name="choice" id="choice">
+                            {% for choice in choices %}
+                            <option value="{{ choice }}">{{ choice }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="amount">Amount:</label>
+                        <input name="amount" id="amount" type="number" />
+                        <input type="submit" value="Enter" />
+                    </form>
+                </div>
+            </div>
+            <form action="leave_group/" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Leave Group" />
+            </form>
+            {% else %}
+            <a href="/home/start_create_group/">Create Group</a>
+            <br />
+            <a href="/home/start_join_group/">Join Group</a>
+            {% endif %}
+            <form action="/user_auth/logout_user/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="logout" id="logout" />
+                <input type="submit" value="Logout" />
+            </form>
+        </div>
+        {% else %}
+        <p>Du bist nicht eingeloggt.</p>
+        {% endif %}
+    </body>
+</html>
