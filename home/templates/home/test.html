@@ -10,7 +10,19 @@
         <div class="container">
             <div class="header">
                 <p>Willkommen, {{ user.username }}!</p>
-                <span class="settings">&#9881;</span>
+                <div class="dropdown-content">
+                    <form action="/user_auth/logout_user/" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="logout" id="logout" />
+                        <input type="submit" value="Logout" />
+                    </form>
+                    {% if group_name != "Platzhalter" %}
+                    <form action="leave_group/" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Leave Group" />
+                    </form>
+                    {% endif %}
+                </div>
             </div>
             {% if group_name != "Platzhalter" %}
             <p class="group">Gruppe: {{group_name}}</p>
