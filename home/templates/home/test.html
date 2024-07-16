@@ -26,10 +26,13 @@
             </div>
             {% if group_name != "Platzhalter" %}
             <p class="group">Gruppe: {{group_name}}</p>
+            <p class="group">Code: {{group_code}}</p>
             <div class="table-container">
                 <div class="table">
                     {% for user in group_users %}
                     <p>{{user.0}}: {{user.1}}</p>
+                    {% endfor %} {% for his in group_history %}
+                    <p>{{his}}</p>
                     {% endfor %}
                 </div>
                 <div class="form-container">
@@ -43,24 +46,18 @@
                         </select>
                         <label for="amount">Amount:</label>
                         <input name="amount" id="amount" type="number" />
+                        <label for="reason">Enter the reason:</label>
+                        <input name="reason" id="reason" type="text" />
+
                         <input type="submit" value="Enter" />
                     </form>
                 </div>
             </div>
-            <form action="leave_group/" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Leave Group" />
-            </form>
             {% else %}
             <a href="/home/start_create_group/">Create Group</a>
             <br />
             <a href="/home/start_join_group/">Join Group</a>
             {% endif %}
-            <form action="/user_auth/logout_user/" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="logout" id="logout" />
-                <input type="submit" value="Logout" />
-            </form>
         </div>
         {% else %}
         <p>Du bist nicht eingeloggt.</p>
