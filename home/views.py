@@ -19,7 +19,7 @@ def index(request):
         user_data = group.group_users["user"]
         users = [[item['username'], item['aura_amount']] for item in user_data]
         history_data = group.group_history["history"]
-        history = [[item['taking_user'], item['user'], item['amount'], item['reason']] for item in user_data]
+        history = [[item['taking_user'], item['user'], item['amount'], item['reason']] for item in history_data]
         choices = [member["username"] for member in user_data]
         context = {
             "group_name": group.group_name,
@@ -49,9 +49,7 @@ def create_group(request):
     if request.method == "POST":
         username = request.user.username
         group_name = request.POST.get("group_name")
-        group_code = ""
-        while Groups.objects.filter(group_code=group_code).exists() or group_code=="":
-            group_code = generate_random_group_code()
+        group_code = generate_random_group_code()
         Groups.objects.create(
             group_name=group_name,
             group_code=group_code,

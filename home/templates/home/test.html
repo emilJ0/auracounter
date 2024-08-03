@@ -31,8 +31,6 @@
                 <div class="table">
                     {% for user in group_users %}
                     <p>{{user.0}}: {{user.1}}</p>
-                    {% endfor %} {% for his in group_history %}
-                    <p>{{his}}</p>
                     {% endfor %}
                 </div>
                 <div class="form-container">
@@ -52,6 +50,28 @@
                         <input type="submit" value="Enter" />
                     </form>
                 </div>
+            </div>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>user</th>
+                            <th>from</th>
+                            <th>aura</th>
+                            <th>reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for his in group_history %}
+                        <tr>
+                            <td>{{ his.0 }}</td>
+                            <td>{{ his.1 }}</td>
+                            <td>{{ his.2 }}</td>
+                            <td>{{ his.3 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             {% else %}
             <a href="/home/start_create_group/">Create Group</a>
